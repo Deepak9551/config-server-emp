@@ -1,3 +1,4 @@
+spring:
   datasource:
     url: jdbc:h2:mem:inventory
     driverClassName: org.h2.Driver
@@ -13,6 +14,11 @@
     init:
       mode: always
 
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
 server:
   port: 8081
 
@@ -27,10 +33,6 @@ eureka:
     prefer-ip-address: true
 
 resilience4j:
-
-  # =========================
-  # Circuit Breaker
-  # =========================
   circuitbreaker:
     instances:
       orderservice:
@@ -43,33 +45,18 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
 
-  # =========================
-  # Retry
-  # =========================
   retry:
     instances:
       orderservice:
         maxAttempts: 3
         waitDuration: 1s
 
-  # =========================
-  # Rate Limiter
-  # =========================
   ratelimiter:
     instances:
       orderservice:
         limitForPeriod: 2
         limitRefreshPeriod: 5s
         timeoutDuration: 2s
-
-  # =========================
-  # Bulkhead
-  # =========================
-  # bulkhead:
-  #   instances:
-  #     orderservice:
-  #       maxConcurrentCalls: 20
-  #       maxWaitDuration: 0
 
 management:
   endpoints:
@@ -84,9 +71,6 @@ management:
   health:
     circuitbreakers:
       enabled: true
-  cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
-my:        
-  variable: or-var-default        
+
+my:
+  variable: or-var-default
