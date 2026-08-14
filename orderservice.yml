@@ -1,2 +1,2 @@
 my:
-  variable: or-var-default
+  variable: or-var-default(normal-refresh)
